@@ -18,25 +18,29 @@ class BiodataForm extends StatefulWidget {
 
 class _BiodataFormState extends State<BiodataForm> {
   String _nama = '';
-  String _tempatLahir = '';
+  String _tempatTanggalLahir = '';
   String _biodata = '';
 
   TextEditingController controllerNama = new TextEditingController();
-  TextEditingController controllertempatLahir = new TextEditingController();
+  TextEditingController controllertempatTanggalLahir =
+      new TextEditingController();
   TextEditingController controllerBiodata = new TextEditingController();
 
   void kirimdata() {
     setState(() {
       _nama = "${controllerNama.text}";
-      _tempatLahir = "${controllertempatLahir.text}";
+      _tempatTanggalLahir = "${controllertempatTanggalLahir.text}";
       _biodata = "${controllerBiodata.text}";
     });
   }
 
   void clear() {
     setState(() {
+      controllerNama.clear();
+      controllertempatTanggalLahir.clear();
+      controllerBiodata.clear();
       _nama = "";
-      _tempatLahir = "";
+      _tempatTanggalLahir = "";
       _biodata = "";
     });
   }
@@ -45,11 +49,14 @@ class _BiodataFormState extends State<BiodataForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.lightBlue,
         title: Text("Form Biodata"),
       ),
-      body: Center(
+      body: Container(
+        margin: const EdgeInsets.all(30),
         child: Padding(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -63,20 +70,34 @@ class _BiodataFormState extends State<BiodataForm> {
                     _nama = value;
                   });
                 },
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Masukan Nama',
+                ),
               ),
-              Text("Nama : $_nama"),
+              Text(
+                "Nama : $_nama",
+                style: TextStyle(fontSize: 16.0),
+              ),
               TextField(
-                controller: controllertempatLahir,
+                controller: controllertempatTanggalLahir,
                 autocorrect: false,
                 autofocus: false,
                 enableSuggestions: false,
                 onSubmitted: (value) {
                   setState(() {
-                    _tempatLahir = value;
+                    _tempatTanggalLahir = value;
                   });
                 },
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: "Masukan Tempat Lahir",
+                ),
               ),
-              Text("Tempat Lahir : $_tempatLahir"),
+              Text(
+                "Tempat Lahir : $_tempatTanggalLahir",
+                style: TextStyle(fontSize: 16.0),
+              ),
               TextField(
                 controller: controllerBiodata,
                 autocorrect: false,
@@ -87,15 +108,40 @@ class _BiodataFormState extends State<BiodataForm> {
                     _biodata = value;
                   });
                 },
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: "Masukan Biodata",
+                ),
               ),
-              Text("Biodata : $_biodata"),
+              Text(
+                "Biodata : $_biodata",
+                style: TextStyle(fontSize: 16.0),
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed: kirimdata, child: Text("Submit")),
+                  ElevatedButton(
+                    onPressed: kirimdata,
+                    child: const Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: clear,
+                    child: const Text(
+                      "Clear",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.yellowAccent,
+                    ),
+                  ),
                 ],
               ),
-              ElevatedButton(onPressed: clear, child: Text("Clear")),
             ],
           ),
         ),
